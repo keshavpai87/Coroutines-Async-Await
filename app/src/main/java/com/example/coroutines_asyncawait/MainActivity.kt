@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         CoroutineScope(Main).launch {
-            Log.i("MyTag", "Calc started")
+            Log.i("MyTag", "Calculation started")
             val s1 = async(IO) { getStock1() }
             val s2 = async(IO) { getStock2() }
             val total = s1.await() + s2.await()
