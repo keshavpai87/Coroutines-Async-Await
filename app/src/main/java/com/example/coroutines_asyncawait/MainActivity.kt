@@ -2,10 +2,12 @@ package com.example.coroutines_asyncawait
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -16,11 +18,12 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-        CoroutineScope(IO).launch {
+        CoroutineScope(Main).launch {
             Log.i("MyTag", "Calc started")
-            val s1 = async { getStock1() }
-            val s2 = async { getStock2() }
+            val s1 = async(IO) { getStock1() }
+            val s2 = async(IO) { getStock2() }
             val total = s1.await() + s2.await()
+            Toast.makeText(applicationContext, "Total is $total", Toast.LENGTH_LONG).show()
             Log.i("MyTag", "Total is $total")
         }
     }
